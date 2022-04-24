@@ -103,7 +103,7 @@
 
                                 </li>
                             </a>
-                            <a href="" class="list-group-item">
+                            <a href="{{ route('tag.index') }}" class="list-group-item">
                                 <li class=" d-flex justify-content-between align-items-center">
                                     Tags
                                     <span class="badge bg-primary rounded-pill">14</span>
