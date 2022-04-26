@@ -89,6 +89,14 @@
                 <div class="row">
                     <div class="col-md-4">
                         <ul class="list-group">
+                            <li class="list-group-item list-group-item-primary fs-5">
+                                Control Panel
+                            </li>
+                            <a href="{{ url('admin/user/'.auth()->user()->id) }}" class="list-group-item">
+                                <li class=" d-flex justify-content-between align-items-center">
+                                    My Profile
+                                </li>
+                            </a>
                             <a href="{{route('category.index')}}" class="list-group-item">
                                 <li class=" d-flex justify-content-between align-items-center">
                                     Categories
@@ -106,6 +114,13 @@
                             <a href="{{ route('tag.index') }}" class="list-group-item">
                                 <li class=" d-flex justify-content-between align-items-center">
                                     Tags
+                                    <span class="badge bg-primary rounded-pill">14</span>
+
+                                </li>
+                            </a>
+                            <a href="{{ route('user.index') }}" class="list-group-item">
+                                <li class=" d-flex justify-content-between align-items-center">
+                                    Users
                                     <span class="badge bg-primary rounded-pill">14</span>
 
                                 </li>

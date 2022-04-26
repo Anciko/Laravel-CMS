@@ -6,27 +6,22 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\CategoryController;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
- */
+use App\Http\Controllers\Admin\UserController;
 
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::resource('category', CategoryController::class);
     Route::resource('post', PostController::class);
     Route::resource('tag', TagController::class);
     Route::get('home', [HomeController::class, 'index'])->name('home');
+
+    //For user
+    Route::get('/users', [UserController::class, 'index'])->name('user.index');
+    Route::get('/user/create', [UserController::class, 'create'])->name('user.create');
+    Route::post('/user', [UserController::class, 'store'])->name('user.store');
+    Route::get('/user/{id}', [UserController::class, 'edit']);
+    Route::patch('/user/{id}', [UserController::class, 'update']);
+
 });
-// Route::prefix('admin')->group(function() {
-//     Route::resource('category', CategoryController::class);
-// });
 
 Route::get('/', function () {
     return redirect('login');
