@@ -18,6 +18,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('content');
+            $table->string('slug');
             $table->integer('category_id');
             $table->string('featured');
             $table->timestamps();

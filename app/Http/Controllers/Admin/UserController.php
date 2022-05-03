@@ -12,27 +12,39 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::all();
+        $users = User::with('profile')->get();
         return view('admin.user.index', compact('users'));
     }
 
-    public function create() {
+    public function create()
+    {
         return view('admin.user.create');
     }
 
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         $validated = $request->validate([
             "name" => "required",
             "email" => "required|unique:users",
             "password" => "required|min:6|max:15"
         ]);
-        if($validated) {
+        if ($validated) {
             $user = new User();
             $user->name = $request->name;
             $user->email = $request->email;
-            $user->password = $request->password;
-            $user->save();
-            return redirect()->route('user.index')->with('success', 'User is created successfully!');
+            $user->password = Hash::make($request->password);
+            if ($user->save()) {
+                $profile = new Profile();
+                $profile->user_id = $user->id;
+                $profile->about = 'About your information';
+
+                if ($profile->save())
+                    return redirect()->route('user.index')->with('success', 'User Profile is created successfully!');
+                else
+                    return redirect()->back()->with('error', 'User Profile is created Fail!');
+            } else {
+                return redirect()->back()->with('error', 'User Profile is created Fail!');
+            }
         }
     }
 
@@ -74,10 +86,17 @@ class UserController extends Controller
                     $profile->profile_image = $imageName;
                 }
                 $profile->update();
-                return redirect()->route('user.index')->with('success','User Profile is updated successfully!');
-            }else{
+                return redirect()->route('user.index')->with('success', 'User Profile is updated successfully!');
+            } else {
                 return redirect()->back()->with('error', 'User Profile is updated Fail!');
             }
         }
+    }
+
+    public function userPermission($roleid, $userid) {
+        $user = User::find($userid);
+        $user->is_admin = $roleid;
+        $user->update();
+        return redirect()->back()->with('success',"Permission access successfully");
     }
 }

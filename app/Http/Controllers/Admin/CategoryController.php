@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Category;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
@@ -24,7 +25,7 @@ class CategoryController extends Controller
     {
 
         $validator = Validator::make($request->all(), [
-            'category' => 'required|unique:categories'
+            'name' => 'required|unique:categories'
         ]);
 
         if ($validator->fails()) {
@@ -32,7 +33,8 @@ class CategoryController extends Controller
         }
 
         $category = new Category();
-        $category->name = $request->category;
+        $category->name = $request->name;
+        $category->slug = Str::slug($request->name);
         $category->save();
 
         return redirect()->route('category.index')->with('success', 'Category created successfully!');
@@ -46,10 +48,11 @@ class CategoryController extends Controller
 
     public function update(Request $request, $id)
     {
-        $validated = $request->validate(['category' => 'required']);
+        $validated = $request->validate(['name' => 'required']);
         if ($validated) {
             $category = Category::find($id);
-            $category->name = $request->category;
+            $category->name = $request->name;
+            $category->slug = Str::slug($request->name);
             $category->update();
 
             return redirect()->route('category.index')->with('success', 'Category is updated successfully!');

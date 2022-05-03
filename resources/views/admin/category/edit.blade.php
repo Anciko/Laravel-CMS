@@ -8,9 +8,9 @@
             @method('PATCH')
             <div class="mb-3">
                 <label for="name" class="mb-1">Category Name</label>
-                <input type="text" id="name" name="category" class="form-control mb-0
+                <input type="text" id="name" name="name" class="form-control mb-0
                 @if($errors->has('category')) is-invalid @endif" value="{{$category->name}}">
-                @error('category')
+                @error('name')
                     <div class="text-danger invalid-feedback"> {{$message}} </div>
                 @enderror
             </div>

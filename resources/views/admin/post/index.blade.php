@@ -54,8 +54,12 @@
                         </td>
                     </tr>
                 @endforeach
+                <div class="mx-auto">
+                    {{ $posts->links() }}
+                </div>
 
             </tbody>
+
         </table>
     </div>
 @endsection

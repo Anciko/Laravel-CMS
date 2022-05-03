@@ -104,13 +104,6 @@
 
                                 </li>
                             </a>
-                            <a href="{{ route('post.index') }}" class="list-group-item">
-                                <li class=" d-flex justify-content-between align-items-center">
-                                   Posts
-                                    <span class="badge bg-primary rounded-pill">14</span>
-
-                                </li>
-                            </a>
                             <a href="{{ route('tag.index') }}" class="list-group-item">
                                 <li class=" d-flex justify-content-between align-items-center">
                                     Tags
@@ -118,6 +111,14 @@
 
                                 </li>
                             </a>
+                            <a href="{{ route('post.index') }}" class="list-group-item">
+                                <li class=" d-flex justify-content-between align-items-center">
+                                   Posts
+                                    <span class="badge bg-primary rounded-pill">14</span>
+
+                                </li>
+                            </a>
+
                             <a href="{{ route('user.index') }}" class="list-group-item">
                                 <li class=" d-flex justify-content-between align-items-center">
                                     Users

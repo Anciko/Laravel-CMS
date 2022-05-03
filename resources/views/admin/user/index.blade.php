@@ -16,7 +16,7 @@
             </div>
         @endif
         @if (Session::has('error'))
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
                 <strong>{{ Session::get('error') }}</strong>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
@@ -27,6 +27,7 @@
             <thead>
                 <tr>
                     <th>ID</th>
+                    {{-- <td>Profile</td> --}}
                     <th>Name</th>
                     <th>Set Permission</th>
                 </tr>
@@ -35,13 +36,15 @@
                 @foreach ($users as $user)
                     <tr>
                         <td>{{ $user->id }}</td>
+                        {{-- <td>
+                            <img src="{{ asset('profile/' . $user->profile->profile_image) }}" >
+                        </td> --}}
                         <td>{{ $user->name }}</td>
                         <td>
                             @if ($user->is_admin != 0)
-                                <a href="" class="badge badge-info bg-info text-decoration-none text-white">Set User</a>
+                                <a href="{{ route('user.permission', [0, $user->id]) }}" class="badge bg-danger text-decoration-none text-white">Remove Permission</a>
                             @else
-                                <a href="" class="badge badge-warning bg-warning text-decoration-none text-white">Set
-                                    Admin</a>
+                                <a href="{{ route('user.permission', [1,$user->id]) }}" class="badge bg-success text-decoration-none text-white">Make Admin</a>
                             @endif
                         </td>
                     </tr>

@@ -7,6 +7,19 @@ use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\UserPostController;
+use App\Models\Category;
+use App\Models\Post;
+
+Route::get('/', function() {
+    $posts = Post::latest()->paginate(6);
+    // dd($posts->toArray());
+    return view('index', compact('posts'));
+});
+
+Route::get('/post/{slug}', [UserPostController::class, 'detail'])->name('postdetail');
+Route::get('/post/tag/{slug}', [UserPostController::class, 'postByTag'])->name('postbytag');
+Route::get('/post/category/{slug}', [UserPostController::class, 'postByCategory'])->name('postbycat');
 
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::resource('category', CategoryController::class);
@@ -20,12 +33,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::post('/user', [UserController::class, 'store'])->name('user.store');
     Route::get('/user/{id}', [UserController::class, 'edit']);
     Route::patch('/user/{id}', [UserController::class, 'update']);
-
+    Route::get('/user/role/{role}/{user}', [UserController::class, 'userPermission'])
+    ->name('user.permission')->middleware('admin');
 });
-
-Route::get('/', function () {
-    return redirect('login');
-});
-
 
 Auth::routes();

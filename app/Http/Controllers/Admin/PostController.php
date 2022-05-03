@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\PostRequest;
-use App\Http\Requests\PostUpdateRequest;
-use App\Models\Category;
-use App\Models\Post;
 use App\Models\Tag;
+use App\Models\Post;
+use App\Models\Category;
+use Illuminate\Support\Str;
+use App\Http\Requests\PostRequest;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\PostUpdateRequest;
 
 class PostController extends Controller
 {
     public function index()
     {
-        $posts = Post::with('category')->get();
+        $posts = Post::with('category')->paginate(4);
         return view('admin.post.index', compact('posts'));
     }
 
@@ -33,6 +34,7 @@ class PostController extends Controller
         $post = new Post();
         $post->title = $request->title;
         $post->content = $request->content;
+        $post->slug = Str::slug($request->title);
         $post->featured = $imageName;
         $post->category_id = $request->category;
 
@@ -64,13 +66,14 @@ class PostController extends Controller
         $post->title = $request->title;
         $post->content = $request->content;
         $post->category_id = $request->category;
+        $post->slug = Str::slug($post->title);
 
         if ($request->hasFile('featured')) {
             $file = $request->file('featured');
             $imageName = uniqid() . '-' . $file->getClientOriginalName();
             $file->move(public_path() . '/uploads/', $imageName);
             $post->featured = $imageName;
-        }
+        } 
 
         if ($post->update()) {
             $post->tags()->sync($request->tags);
