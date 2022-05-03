@@ -72,5 +72,8 @@
             </div>
 
         </div>
+        <div class="col-md-8">
+            @include('comment')
+        </div>
     </div>
 @endsection
