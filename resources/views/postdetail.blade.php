@@ -4,23 +4,29 @@
     <div class="container py-4">
         <div class="row">
             <div class="col-md-8">
-                <div class="card rounded-0 shadow p-3">
-                    <img src="{{ asset('uploads/' . $post->featured) }}" class="card-img-top img-fluid d-block mx-auto"
-                        alt="{{ $post->title }}" style="width: 200px">
-                    <div class="card-body">
-                        <p>Author: Name</p>
-                        Category: <span class="badge bg-success me-2">{{ $post->category->name }}</span>
-                        @foreach ($post->tags as $tag)
-                            Tag: <span class="badge bg-secondary">{{ $tag->name }}</span>
-                        @endforeach
-                        <h5 class="card-title mt-3">{{ $post->title }}</h5>
-                        <p class="card-text">
-                            {{ $post->content }}
-                        </p>
-                        <p class="card-text">
-                            <small class="text-muted"> {{ $post->updated_at->diffForHumans() }} </small>
-                        </p>
+                <div class="col-md-12">
+                    <div class="card rounded-0 shadow p-3">
+                        <img src="{{ asset('uploads/' . $post->featured) }}" class="card-img-top img-fluid d-block mx-auto"
+                            alt="{{ $post->title }}" style="width: 200px">
+                        <div class="card-body">
+                            <p>Author: Name</p>
+                            Category: <span class="badge bg-success me-2">{{ $post->category->name }}</span>
+                            @foreach ($post->tags as $tag)
+                                Tag: <span class="badge bg-secondary">{{ $tag->name }}</span>
+                            @endforeach
+                            <h5 class="card-title mt-3">{{ $post->title }}</h5>
+                            <p class="card-text">
+                                {{ $post->content }}
+                            </p>
+                            <p class="card-text">
+                                <small class="text-muted"> {{ $post->updated_at->diffForHumans() }} </small>
+                            </p>
+                        </div>
                     </div>
+                </div>
+
+                <div class="col-md-12">
+                    @include('comment')
                 </div>
             </div>
             <div class="col-md-4">
@@ -72,8 +78,6 @@
             </div>
 
         </div>
-        <div class="col-md-8">
-            @include('comment')
-        </div>
+        
     </div>
 @endsection
